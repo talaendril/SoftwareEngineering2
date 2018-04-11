@@ -53,4 +53,9 @@ public class TelefonEntry {
     public boolean isNew() {
         return isNew;
     }
+    
+    @Override
+    public String toString() {
+    	return "Last Name " + this.lastName + ", First Name " + this.firstName + ", Number " + this.number;
+    }
 }

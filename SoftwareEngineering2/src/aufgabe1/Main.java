@@ -17,17 +17,17 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
+	ObservableList<TelefonEntry> telefonEntries = FXCollections.observableArrayList(new ArrayList<>());
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane root = new BorderPane();
 		
-		ObservableList<TelefonEntry> telefonEntries = FXCollections.observableArrayList(new ArrayList<>());
-		
-		telefonEntries.add(new TelefonEntry("Winkler", "Nico", "00000000"));
-		telefonEntries.add(new TelefonEntry("Glogger", "Samuel", "1111111"));
-		telefonEntries.add(new TelefonEntry("Gesell", "Florian", "22222222"));
-		telefonEntries.add(new TelefonEntry("Mey", "Peter", "33333333"));
-		telefonEntries.add(new TelefonEntry("Schwiegard", "Luis", "44444444"));
+		List<TelefonEntry> jsonEntries = FileSystem.readEntriesFromFile();
+		Iterator<TelefonEntry> jsonIterator = jsonEntries.iterator();
+		while(jsonIterator.hasNext()) {
+			telefonEntries.add(jsonIterator.next());
+		}
 		
 		SearchArea searchArea = new SearchArea();
 		AddDeleteArea addDeleteArea = new AddDeleteArea();
@@ -37,7 +37,7 @@ public class Main extends Application {
 		 * 	This is the implementation of what happens when you press a button
 		 * 	Might be a good idea to put them in a different class
 		 * 
-		 * this is how you use the EventHandler on a button without lamba expressions
+		 * this is how you use the EventHandler on a button without lambda expressions
 		 * example:
 		 * 
 		 * 	addDeleteArea.getAddButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -130,7 +130,10 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.show();
     }
-
+	
+	public void stop() {
+		FileSystem.writeFile(telefonEntries);
+	}
 
     public static void main(String[] args) {
         launch(args);

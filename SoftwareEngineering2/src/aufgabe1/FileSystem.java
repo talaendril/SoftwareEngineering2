@@ -3,147 +3,54 @@ package aufgabe1;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.WatchEvent.Kind;
-import java.nio.file.WatchEvent.Modifier;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FileSystem implements Path {
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class FileSystem {
 	
-	/*
-	public static void readFile() {
-		try (InputStream is = Files.newInputStream (path)) {
-			ObjectMapper mapper = new ObjectMapper ();
-			JsonNode root = mapper . readTree (is);
-			// Verwenden Sie den ObjectMapper hier , um
-			// die Daten aus der Datei auszulesen .
+	private static Path path = Paths.get("jsonTelefonEntries.txt");
+	
+	public static List<TelefonEntry> readEntriesFromFile() {
+		List<TelefonEntry> entries = new ArrayList<>();
+		try (InputStream is = Files.newInputStream(path)) {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootArray = mapper.readTree(is);
+			for(JsonNode root : rootArray) {
+				String firstName = root.path("firstName").asText();
+				String lastName = root.path("lastName").asText();
+				String number = root.path("number").asText();
+				entries.add(new TelefonEntry(lastName, firstName, number));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return entries;
+	}
+	
+	public static void writeFile(List<TelefonEntry> entries) {
+		JsonFactory factory = new JsonFactory ();
+		try (OutputStream os = Files.newOutputStream(path);
+				JsonGenerator jg = factory.createGenerator(os)) {
+			jg.writeStartArray();
+			for(TelefonEntry entry : entries) {
+				jg.writeStartObject();
+				jg.writeStringField("lastName", entry.getLastName());
+				jg.writeStringField("firstName", entry.getFirstName());
+				jg.writeStringField("number", entry.getNumber());
+				jg.writeEndObject();
+			}
+			jg.writeEndArray();
+			jg.close();
 		} catch ( IOException e) {
 			e. printStackTrace ();
 		}
 	}
-	
-	
-	public static void writeFile() {
-		try (OutputStream os = Files.newOutputStream (path);
-				JsonGenerator jg = factory.createGenerator (os)) {
-				// Verwenden Sie jg um fuer jeden Eintrag im Telefonbuch
-				// entsprechende Objekte im JSON zu erzeugen
-		} catch ( IOException e) {
-			e. printStackTrace ();
-		}
-	}
-	*/
-	
-	@Override
-	public int compareTo(Path arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean endsWith(Path arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Path getFileName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public java.nio.file.FileSystem getFileSystem() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path getName(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getNameCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Path getParent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isAbsolute() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Path normalize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WatchKey register(WatchService arg0, Kind<?>[] arg1, Modifier... arg2) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path relativize(Path arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path resolve(Path arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean startsWith(Path arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Path subpath(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path toAbsolutePath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Path toRealPath(LinkOption... arg0) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public URI toUri() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
