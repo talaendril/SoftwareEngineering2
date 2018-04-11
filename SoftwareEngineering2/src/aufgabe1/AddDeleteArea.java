@@ -9,7 +9,7 @@ public class AddDeleteArea {
 	private Button deleteButton = new Button("Delete");
 	private Button addButton = new Button("Add");
 	
-	public AddDeleteArea() {
+	public AddDeleteArea(Runnable onAdd, Runnable onDelete) {
 		AnchorPane.setTopAnchor(deleteButton, 10.0);
 		AnchorPane.setRightAnchor(deleteButton, 10.0);
 		AnchorPane.setBottomAnchor(deleteButton, 10.0);
@@ -17,6 +17,14 @@ public class AddDeleteArea {
 		AnchorPane.setTopAnchor(addButton, 10.0);
 		AnchorPane.setLeftAnchor(addButton, 10.0);
 		AnchorPane.setBottomAnchor(addButton, 10.0);
+		
+		addButton.setOnAction(event -> {
+			onAdd.run();
+		});
+		
+		deleteButton.setOnAction(event -> {
+			onDelete.run();
+		});
 		
 		anchorPane.getChildren().addAll(deleteButton, addButton);
 	}
