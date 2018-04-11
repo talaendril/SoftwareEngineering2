@@ -37,7 +37,7 @@ public class Main extends Application {
 		 * 	This is the implementation of what happens when you press a button
 		 * 	Might be a good idea to put them in a different class
 		 * 
-		 * this is how you use the EventHandler on a button without lamba expressions
+		 * this is how you use the EventHandler on a button without lambda expressions
 		 * example:
 		 * 
 		 * 	addDeleteArea.getAddButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
