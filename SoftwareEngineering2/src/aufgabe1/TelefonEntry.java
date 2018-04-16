@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class TelefonEntry {
 
     private final SimpleStringProperty lastName = new SimpleStringProperty();
-    private final SimpleStringProperty  firstName = new SimpleStringProperty();
-    private final SimpleStringProperty  number = new SimpleStringProperty();
+    private final SimpleStringProperty firstName = new SimpleStringProperty();
+    private final SimpleStringProperty number = new SimpleStringProperty();
     private boolean isNew = true;
 
     public TelefonEntry() {

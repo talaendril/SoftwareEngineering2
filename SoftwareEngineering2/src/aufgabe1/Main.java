@@ -17,18 +17,10 @@ public class Main extends Application {
 	
 	TelefonBook tbook = null;
 	
-	//ObservableList<TelefonEntry> telefonEntries = FXCollections.observableArrayList(new ArrayList<>());
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane root = new BorderPane();
 		tbook = new TelefonBook();
-		
-		List<TelefonEntry> jsonEntries = FileSystem.readEntriesFromFile();
-		Iterator<TelefonEntry> jsonIterator = jsonEntries.iterator();
-		while(jsonIterator.hasNext()) {
-			tbook.add(jsonIterator.next());
-		}
 		
 		EntryArea entryArea = new EntryArea(tbook.getNumbers());
 		SearchArea searchArea = new SearchArea();
@@ -42,7 +34,6 @@ public class Main extends Application {
 				tbook.getNumbers().remove(selection);
 			}
 		});
-		
 		searchArea.getSearchButton().addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
 			entryArea.clearSelection();
 			String search = searchArea.getTextField().getText();
