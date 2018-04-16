@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileSystem {
 	
-	private static Path path = Paths.get("jsonTelefonEntries.txt");
+	private static Path path = Paths.get("TelefonEntries.json");
 	
 	public static List<TelefonEntry> readEntriesFromFile() {
 		List<TelefonEntry> entries = new ArrayList<>();

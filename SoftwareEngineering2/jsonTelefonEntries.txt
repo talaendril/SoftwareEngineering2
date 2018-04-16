@@ -1,1 +1,0 @@
-[{"lastName":"Winkler","firstName":"Nico","number":"00000000"},{"lastName":"Glogger","firstName":"Samuel","number":"11111111"}]
