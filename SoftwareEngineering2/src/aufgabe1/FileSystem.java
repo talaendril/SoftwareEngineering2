@@ -53,4 +53,23 @@ public class FileSystem {
 			e. printStackTrace ();
 		}
 	}
+	
+	//Shitty hardcoded solution
+	public static List<TelefonEntry> switchTelefonBook() {
+		Path newPath = Paths.get("secondEntries.json");
+		List<TelefonEntry> entries = new ArrayList<>();
+		try (InputStream is = Files.newInputStream(newPath)) {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootArray = mapper.readTree(is);
+			for(JsonNode root : rootArray) {
+				String firstName = root.path("firstName").asText();
+				String lastName = root.path("lastName").asText();
+				String number = root.path("number").asText();
+				entries.add(new TelefonEntry(lastName, firstName, number));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return entries;
+	}
 }

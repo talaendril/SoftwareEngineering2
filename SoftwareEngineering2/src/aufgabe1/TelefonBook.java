@@ -20,6 +20,13 @@ public class TelefonBook {
 		}
 	}
 	
+	TelefonBook(List<TelefonEntry> list) {
+		Iterator<TelefonEntry> iterator = list.iterator();
+		while(iterator.hasNext()) {
+			this.add(iterator.next());
+		}
+	}
+	
 	public void add(TelefonEntry entry) {
 		if (entry != null) {
 			obsTelefonEntries.add(entry);

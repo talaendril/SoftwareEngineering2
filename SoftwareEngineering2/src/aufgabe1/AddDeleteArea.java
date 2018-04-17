@@ -10,13 +10,13 @@ public class AddDeleteArea {
 	private Button addButton = new Button("Add");
 	
 	public AddDeleteArea(Runnable onAdd, Runnable onDelete) {
-		AnchorPane.setTopAnchor(deleteButton, 10.0);
-		AnchorPane.setRightAnchor(deleteButton, 10.0);
 		AnchorPane.setBottomAnchor(deleteButton, 10.0);
+		AnchorPane.setRightAnchor(deleteButton, 10.0);
+		AnchorPane.setLeftAnchor(deleteButton, 10.0);
 		
 		AnchorPane.setTopAnchor(addButton, 10.0);
 		AnchorPane.setLeftAnchor(addButton, 10.0);
-		AnchorPane.setBottomAnchor(addButton, 10.0);
+		AnchorPane.setRightAnchor(addButton, 10.0);
 		
 		addButton.setOnAction(event -> {
 			onAdd.run();

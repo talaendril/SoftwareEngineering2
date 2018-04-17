@@ -11,12 +11,14 @@ public class SearchArea {
 	private final TextField textField = new TextField();
 	
 	public SearchArea() {
-		AnchorPane.setTopAnchor(textField, 10.0);
+		AnchorPane.setBottomAnchor(textField, 10.0);
 		AnchorPane.setLeftAnchor(textField, 10.0);
 		AnchorPane.setRightAnchor(textField, 90.0);
+		AnchorPane.setTopAnchor(textField, 10.0);
 		
-		AnchorPane.setTopAnchor(searchButton, 10.0);
+		AnchorPane.setBottomAnchor(searchButton, 10.0);
 		AnchorPane.setRightAnchor(searchButton, 10.0);
+		AnchorPane.setTopAnchor(searchButton, 10.0);
 		
 		anchorPane.getChildren().addAll(searchButton, textField);
 	}

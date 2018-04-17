@@ -9,6 +9,9 @@ import javafx.application.Application;
 //import javafx.fxml.FXMLLoader;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -16,12 +19,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	TelefonBook tbook = null;
+	TelefonBook secondBook = null;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		BorderPane root = new BorderPane();
 		tbook = new TelefonBook();
 		
+		//AREAS
 		EntryArea entryArea = new EntryArea(tbook.getNumbers());
 		SearchArea searchArea = new SearchArea();
 		AddDeleteArea addDeleteArea = new AddDeleteArea(
@@ -52,8 +57,34 @@ public class Main extends Application {
 		});
 		//Button Implementation ends here
 		
-		root.setTop(searchArea.getPane());
-		root.setBottom(addDeleteArea.getPane());
+		//MENU
+		MenuBar mb = new MenuBar();
+		Menu file = new Menu("File");
+		MenuItem switchBook = new MenuItem("Switch TelefonBook");
+		switchBook.setOnAction(a -> {
+			secondBook = new TelefonBook(FileSystem.switchTelefonBook());
+			entryArea.setItems(secondBook.getNumbers());
+		});
+		MenuItem switchBack = new MenuItem("Switch Back");
+		switchBack.setOnAction(a -> {
+			//secondBook = new TelefonBook(FileSystem.readEntriesFromFile());
+			entryArea.setItems(tbook.getNumbers());
+		});
+		MenuItem importTo = new MenuItem("Import to First");	//can only import second into first Book
+		importTo.setOnAction(a -> {
+			if(secondBook != null) {
+				Iterator<TelefonEntry> secondBookIterator = secondBook.getNumbers().iterator();
+				while(secondBookIterator.hasNext()) {
+					tbook.add(secondBookIterator.next());
+				}
+			}
+		});
+		file.getItems().addAll(switchBook, switchBack, importTo);
+		mb.getMenus().add(file);
+	
+		root.setTop(mb);
+		root.setBottom(searchArea.getPane());
+		root.setRight(addDeleteArea.getPane());
 		root.setCenter(entryArea.getPane());
 		
 		primaryStage.setTitle("Telefonbuch");
@@ -62,7 +93,7 @@ public class Main extends Application {
     }
 	
 	public void stop() {
-		FileSystem.writeFile(tbook.getNumbers());
+		//FileSystem.writeFile(tbook.getNumbers());
 	}
 
     public static void main(String[] args) {
