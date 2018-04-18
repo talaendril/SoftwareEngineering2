@@ -16,9 +16,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileSystem {
 	
-	private static Path path = Paths.get("TelefonEntries.json");
+	private static Path pathOne = Paths.get("TelefonEntries.json");
+	private static Path pathTwo = Paths.get("secondEntries.json");
 	
-	public static List<TelefonEntry> readEntriesFromFile() {
+	public static List<TelefonEntry> readEntriesFromFile(Path p) {
+		Path path = null;
+		if(p == null) {
+			path = pathOne;
+		} else {
+			path = p;
+		}
 		List<TelefonEntry> entries = new ArrayList<>();
 		try (InputStream is = Files.newInputStream(path)) {
 			ObjectMapper mapper = new ObjectMapper();
@@ -35,7 +42,13 @@ public class FileSystem {
 		return entries;
 	}
 	
-	public static void writeFile(List<TelefonEntry> entries) {
+	public static void writeFile(List<TelefonEntry> entries, Path p) {
+		Path path = null;
+		if(p == null) {
+			path = pathOne;
+		} else {
+			path = p;
+		}
 		JsonFactory factory = new JsonFactory ();
 		try (OutputStream os = Files.newOutputStream(path);
 				JsonGenerator jg = factory.createGenerator(os)) {
@@ -71,5 +84,13 @@ public class FileSystem {
 			e.printStackTrace();
 		}
 		return entries;
+	}
+	
+	public static Path getPathOne() {
+		return pathOne;
+	}
+	
+	public static Path getPathTwo() {
+		return pathTwo;
 	}
 }
