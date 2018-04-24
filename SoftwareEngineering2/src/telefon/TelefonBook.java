@@ -1,4 +1,4 @@
-package aufgabe1;
+package telefon;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -8,12 +8,13 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import jsonworker.FileSystem;
 
 public class TelefonBook { 
 	private final ObservableList<TelefonEntry> obsTelefonEntries = FXCollections.observableArrayList(new ArrayList<>());
 	private final FilteredList<TelefonEntry> filteredEntries = new FilteredList<>(obsTelefonEntries);
 	
-	TelefonBook(Path path) {
+	public TelefonBook(Path path) {
 		if(path == null) {
 			return;
 		}

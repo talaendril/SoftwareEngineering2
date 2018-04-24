@@ -1,4 +1,4 @@
-package aufgabe1;
+
 
 import java.io.File;
 import java.nio.file.Path;
@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import areas.AddDeleteArea;
+import areas.EntryArea;
+import areas.ImportArea;
+import areas.SearchArea;
 import javafx.application.Application;
 //import javafx.event.EventHandler;
 //import javafx.fxml.FXMLLoader;
@@ -21,6 +25,9 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jsonworker.FileSystem;
+import telefon.TelefonBook;
+import telefon.TelefonEntry;
 
 public class Main extends Application {
 	

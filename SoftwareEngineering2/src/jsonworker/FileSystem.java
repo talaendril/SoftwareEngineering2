@@ -1,4 +1,4 @@
-package aufgabe1;
+package jsonworker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,8 +11,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import telefon.TelefonEntry;
+import windows.ErrorWindow;
 
 public class FileSystem {
 	
@@ -36,9 +40,11 @@ public class FileSystem {
 				String number = root.path("number").asText();
 				entries.add(new TelefonEntry(lastName, firstName, number));
 			}
+		} catch(JsonParseException e) {
+			new ErrorWindow("Tried to open a file that's not in json format", e);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		return entries;
 	}
 	
@@ -66,7 +72,7 @@ public class FileSystem {
 			e. printStackTrace ();
 		}
 	}
-	
+	/*
 	//Shitty hardcoded solution
 	public static List<TelefonEntry> switchTelefonBook() {
 		Path newPath = Paths.get("secondEntries.json");
@@ -85,6 +91,7 @@ public class FileSystem {
 		}
 		return entries;
 	}
+	*/
 	
 	public static Path getPathOne() {
 		return pathOne;

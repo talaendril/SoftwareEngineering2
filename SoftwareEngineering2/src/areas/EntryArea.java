@@ -1,4 +1,4 @@
-package aufgabe1;
+package areas;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import telefon.TelefonEntry;
 
 import java.util.Iterator;
 import java.util.List;
