@@ -1,5 +1,6 @@
-package aufgabe1;
+package telefon;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,13 +8,17 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import jsonworker.FileSystem;
 
 public class TelefonBook { 
 	private final ObservableList<TelefonEntry> obsTelefonEntries = FXCollections.observableArrayList(new ArrayList<>());
 	private final FilteredList<TelefonEntry> filteredEntries = new FilteredList<>(obsTelefonEntries);
 	
-	TelefonBook() {
-		List<TelefonEntry> jsonEntries = FileSystem.readEntriesFromFile();
+	public TelefonBook(Path path) {
+		if(path == null) {
+			return;
+		}
+		List<TelefonEntry> jsonEntries = FileSystem.readEntriesFromFile(path);
 		Iterator<TelefonEntry> jsonIterator = jsonEntries.iterator();
 		while(jsonIterator.hasNext()) {
 			this.add(jsonIterator.next());
@@ -39,4 +44,19 @@ public class TelefonBook {
             return (entry.getFirstName().contains(search)) || entry.getLastName().contains(search) || entry.getNumber().contains(search);
         });
     }
+	
+	public void read(Path path) {
+        obsTelefonEntries.clear();
+        if(path != null) {
+            List<TelefonEntry> fromFile = FileSystem.readEntriesFromFile(path);
+
+            if (fromFile != null) {
+                obsTelefonEntries.addAll(fromFile);
+            }
+        }
+    }
+	
+	public void saveTo(Path path) {
+		FileSystem.writeFile(obsTelefonEntries, path);
+	}
 }

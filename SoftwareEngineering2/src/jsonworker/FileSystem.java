@@ -1,4 +1,4 @@
-package aufgabe1;
+package jsonworker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,14 +11,25 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import telefon.TelefonEntry;
+import windows.ErrorWindow;
+
 public class FileSystem {
 	
-	private static Path path = Paths.get("TelefonEntries.json");
+	private static Path pathOne = Paths.get("TelefonEntries.json");
+	private static Path pathTwo = Paths.get("secondEntries.json");
 	
-	public static List<TelefonEntry> readEntriesFromFile() {
+	public static List<TelefonEntry> readEntriesFromFile(Path p) {
+		Path path = null;
+		if(p == null) {
+			path = pathOne;
+		} else {
+			path = p;
+		}
 		List<TelefonEntry> entries = new ArrayList<>();
 		try (InputStream is = Files.newInputStream(path)) {
 			ObjectMapper mapper = new ObjectMapper();
@@ -29,13 +40,21 @@ public class FileSystem {
 				String number = root.path("number").asText();
 				entries.add(new TelefonEntry(lastName, firstName, number));
 			}
+		} catch(JsonParseException e) {
+			new ErrorWindow("Tried to open a file that's not in json format", e);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		return entries;
 	}
 	
-	public static void writeFile(List<TelefonEntry> entries) {
+	public static void writeFile(List<TelefonEntry> entries, Path p) {
+		Path path = null;
+		if(p == null) {
+			path = pathOne;
+		} else {
+			path = p;
+		}
 		JsonFactory factory = new JsonFactory ();
 		try (OutputStream os = Files.newOutputStream(path);
 				JsonGenerator jg = factory.createGenerator(os)) {
@@ -52,5 +71,33 @@ public class FileSystem {
 		} catch ( IOException e) {
 			e. printStackTrace ();
 		}
+	}
+	/*
+	//Shitty hardcoded solution
+	public static List<TelefonEntry> switchTelefonBook() {
+		Path newPath = Paths.get("secondEntries.json");
+		List<TelefonEntry> entries = new ArrayList<>();
+		try (InputStream is = Files.newInputStream(newPath)) {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootArray = mapper.readTree(is);
+			for(JsonNode root : rootArray) {
+				String firstName = root.path("firstName").asText();
+				String lastName = root.path("lastName").asText();
+				String number = root.path("number").asText();
+				entries.add(new TelefonEntry(lastName, firstName, number));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return entries;
+	}
+	*/
+	
+	public static Path getPathOne() {
+		return pathOne;
+	}
+	
+	public static Path getPathTwo() {
+		return pathTwo;
 	}
 }

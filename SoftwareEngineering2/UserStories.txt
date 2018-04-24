@@ -1,0 +1,8 @@
+Ich als User m�chte bestimmte Telefoneinträge aus dem Telefonbuch suchen können.
+Ich als User m�chte Telefoneinträge hinzufügen können.
+Ich als User m�chte Telefoneinträge löschen können.
+Ich als User m�chte Telefoneinträge bearbeiten können.
+Ich als User m�chte ein zweites Telefonbuch öffnen können.
+Ich als User m�chte aus dem zweiten Telefonbuch Einträge in mein erstes Telefonbuch kopieren können.
+Ich als User m�chte mein Telefonbuch aus einer json Datei lesen können.
+Ich als User m�chte mein Telefonbuch in einer json Datei speichern können.
